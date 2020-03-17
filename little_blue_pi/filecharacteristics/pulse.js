@@ -1,7 +1,7 @@
 var bleno = require('bleno');
 var os = require('os');
 var util = require('util');
-var pyshell = require('python-shell');
+let {PythonShell} = require('python-shell');
 
 var BlenoCharacteristic = bleno.Characteristic;
 
@@ -43,13 +43,14 @@ pulseCharacteristic.prototype.onWriteRequest = function(data, offset, withoutRes
   }
   else if(stringData == "_STOP_")
   {
-    py.end(function (err,code,signal) {
-      if (err) throw err;
-      console.log('The exit code was: ' + code);
-      console.log('The exit signal was: ' + signal);
-      console.log('finished');
-      console.log('finished');
-    });
+    // py.end(function (err,code,signal) {
+    //   if (err) throw err;
+    //   console.log('The exit code was: ' + code);
+    //   console.log('The exit signal was: ' + signal);
+    //   console.log('finished');
+    //   console.log('finished');
+    // });
+    py.childProcess.kill('SIGINT');
     callback(this.RESULT_SUCCESS);
   }
   else
